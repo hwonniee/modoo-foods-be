@@ -1,0 +1,28 @@
+server:
+  servlet:
+    context-path: /api/v1/
+
+
+spring:
+  datasource:
+    url: jdbc:mariadb:tcp://localhost/~/moodoo-foods
+    username: root
+    password: moodooFoods
+    driver-class-name: org.mariadb.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        #        show_sql: true
+        format_sql: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
+
+springdoc:
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
