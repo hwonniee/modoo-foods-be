@@ -5,9 +5,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mariadb:tcp://localhost/~/moodoo-foods
+    url: jdbc:mariadb:tcp://localhost/~/mocoo-mocoo
     username: root
-    password: moodooFoods
+    password: mocoomocoo
     driver-class-name: org.mariadb.jdbc.Driver
 
   jpa:
