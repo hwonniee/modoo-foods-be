@@ -9,7 +9,7 @@ import lombok.Setter;
 public class Sample {
     private long id;
 
-    @Schema(description = "이름", nullable = false, example = "김지섭")
+    @Schema(description = "이름", nullable = false, example = "장혜원")
     private String name;
 
     public Sample(long id, String name) {
