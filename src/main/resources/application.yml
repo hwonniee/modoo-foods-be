@@ -5,7 +5,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mariadb://localhost:3306/mocoo
+    url: jdbc:mariadb://localhost:3306/mocoo?allowPublicKeyRetrieval=true&useSSL=false
     username: root
     password: wonniee
     driver-class-name: org.mariadb.jdbc.Driver
