@@ -32,7 +32,7 @@ public class MemberService {
             throw new CustomException(HttpStatus.BAD_REQUEST, "이름 또는 비밀번호가 틀립니다.");
         }
 
-        return jwtUtils.createToken(findMember);
+        return jwtUtils.createAccessToken(findMember);
     }
 
     private void validateDuplicateMember(Member member) {

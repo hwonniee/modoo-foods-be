@@ -31,12 +31,12 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         final String token = authorizationHeader.substring("Bearer ".length());
-        if (token == null) {
+        if (token.isEmpty()) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        if (jwtUtils.validation(token)) {
+        if (jwtUtils.validateAccessToken(token)) {
             String memberId = jwtUtils.parseUserId(token);
             Authentication authentication = jwtUtils.getAuthentication(memberId);
             SecurityContextHolder.getContext().setAuthentication(authentication);

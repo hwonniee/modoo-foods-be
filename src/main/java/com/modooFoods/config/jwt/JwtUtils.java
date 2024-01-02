@@ -21,24 +21,40 @@ public class JwtUtils {
 
     private final UserDetailsService userDetailsService;
 
-    private final long EXP_TIME = 1000L * 60 * 3;
+    private final long ACCESS_TOKEN_EXPIRATION_TIME = 1000L * 60 * 3;
+    private final long REFRESH_TOKEN_EXPIRATION_TIME = 1000L * 60 * 60 * 24 * 7; // 7 days
     private final String JWT_SECRET = "secret";
     private final SignatureAlgorithm SIGNATURE_ALG = SignatureAlgorithm.HS256;
 
+    public String createAccessToken(Member member) {
+        return createToken(member, ACCESS_TOKEN_EXPIRATION_TIME);
+    }
 
-    public String createToken(Member member) {
+    public String createRefreshToken(Member member) {
+        return createToken(member, REFRESH_TOKEN_EXPIRATION_TIME);
+    }
+
+    private String createToken(Member member, long expirationTime) {
         final Claims claims = Jwts.claims();
         claims.put("member_id", member.getId());
         claims.put("name", member.getName());
 
         return Jwts.builder()
                 .setClaims(claims)
-                .setExpiration(new Date(System.currentTimeMillis() + EXP_TIME))
+                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
                 .signWith(SIGNATURE_ALG, JWT_SECRET)
                 .compact();
     }
 
-    public boolean validation(String token) {
+    public boolean validateAccessToken(String token) {
+        return validateToken(token);
+    }
+
+    public boolean validateRefreshToken(String token) {
+        return validateToken(token);
+    }
+
+    private boolean validateToken(String token) {
         final Claims claims = getAllClaims(token);
         final Date exp = claims.getExpiration();
         return exp.after(new Date());
@@ -55,7 +71,7 @@ public class JwtUtils {
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
 
-    public Claims getAllClaims(String token) {
+    private Claims getAllClaims(String token) {
         try {
             return Jwts.parser()
                     .setSigningKey(JWT_SECRET)
@@ -65,5 +81,4 @@ public class JwtUtils {
             throw new CustomException(HttpStatus.UNAUTHORIZED, "토큰 정보가 올바르지 않습니다.");
         }
     }
-
 }
