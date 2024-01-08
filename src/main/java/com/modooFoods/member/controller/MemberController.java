@@ -25,8 +25,8 @@ public class MemberController {
         return memberService.findMembers();
     }
 
-    @GetMapping("{id}")
-    Member findMemberById(@PathVariable long id) {
+    @GetMapping("dtl")
+    Member findMemberById(@RequestParam long id) {
         return memberService.findOne(id);
     }
 
@@ -45,8 +45,8 @@ public class MemberController {
         return memberService.signUpMember(member);
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<?> deleteMember(@PathVariable long id) {
+    @DeleteMapping()
+    public ResponseEntity<?> deleteMember(@RequestParam long id) {
         memberService.deleteMember(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
